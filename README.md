@@ -1,12 +1,4 @@
-Here’s your **updated `README.md`** with:
 
-* A clear **pre-requisite structure**
-* Explanation of the new `automation.zsh` module
-* All prior sections preserved and improved for clarity
-
----
-
-```markdown
 ## ZSH Automation System — dotmanz
 
 ### Prerequisite: Folder Structure
@@ -211,7 +203,3 @@ And if something breaks, it only breaks one file — not your whole shell.
 
 This is a developer-first blueprint for managing your ZSH like a system.
 
-```
-
-Would you like me to update your `dotmanz` repo automatically to include this and commit it under `docs: add automation.zsh and update readme`?
-```

@@ -6,3 +6,39 @@ zsh/private.zsh
 
 # OS
 .DS_Store
+# Rust
+/cli/target
+**/*.rs.bk
+Cargo.lock
+
+# Compiled files
+/target/
+**/*.rs.bk
+
+# Backup files
+*.bak
+*.tmp
+*.swp
+*.swo
+*~
+
+# Logs and debug files
+*.log
+
+# Cargo package backups
+Cargo.lock
+
+# Executables (if built manually or copied)
+dotmanz
+dotmanz.exe
+
+# MacOS-specific metadata
+.DS_Store
+
+# Python AI directory (if you're keeping AI in same repo)
+ai/__pycache__/
+ai/models/
+*.pyc
+
+# VSCode config
+.vscode/

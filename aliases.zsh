@@ -10,6 +10,8 @@ alias e='cd ~/Code/experiments'
 alias k='cd ~/Code/keys'
 alias t='cd ~/Code/templates'
 alias b='cd ~/Code/bin'
+alias d='cd ~/Code/dotfiles'
+alias z='cd ~/Code/dotfiles/zsh'
 
 alias cls='clear'
 alias czsh='code ~/.zshrc'

@@ -1,0 +1,13 @@
+[package]
+name = "dotmanz"
+version = "1.0.0"
+edition = "2021"
+authors = ["Ayush Poudel <your-email@example.com>"]
+description = "Modular ZSH CLI manager for dotfiles and shell automation"
+license = "MIT"
+repository = "https://github.com/ayuspoudel/dotmanz"
+
+[dependencies]
+clap = { version = "4.5.4", features = ["derive"] }
+colored = "2.1.0"
+dirs = "5.0.1"

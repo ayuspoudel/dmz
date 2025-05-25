@@ -1,1 +1,3 @@
 private.zsh
+# Do not track secrets
+zsh/private.zsh

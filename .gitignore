@@ -1,3 +1,8 @@
 private.zsh
 # Do not track secrets
 zsh/private.zsh
+# VSCode
+.vscode/
+
+# OS
+.DS_Store

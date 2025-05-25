@@ -1,0 +1,31 @@
+#!/bin/bash
+
+ZSH_HOME="$HOME/.dotmanz/zsh"
+
+cmd="$1"
+shift
+
+case "$cmd" in
+  aws|git|docker|terraform|aliases|prompt|plugins|path|safety|dynatrace|automation)
+    source "$ZSH_HOME/helpers.zsh"
+    alias_group "$cmd" "$@"
+    ;;
+  add)
+    name="$1"
+    if [[ -z "$name" ]]; then
+      echo "❌ Usage: dot add <group-name>"
+      exit 1
+    fi
+    filepath="$ZSH_HOME/${name}.zsh"
+    echo "# ${name}.zsh" > "$filepath"
+    echo "✅ Created: $filepath"
+    ;;
+  help|"")
+    source "$ZSH_HOME/helpers.zsh"
+    help
+    ;;
+  *)
+    echo "❌ Unknown command: $cmd"
+    echo "Try: dot help"
+    ;;
+esac

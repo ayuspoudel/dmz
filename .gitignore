@@ -42,3 +42,37 @@ ai/models/
 
 # VSCode config
 .vscode/
+
+# === Rust build artifacts ===
+/dot/target/
+**/*.rs.bk
+**/*.rs~  # temporary files
+Cargo.lock
+
+# === Rust coverage/test output ===
+/dot/coverage/
+**/*.profraw
+
+# === Editor config ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# === macOS system ===
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# === ZSH / Shell ===
+.zsh_history
+.zshrc.bak*
+.dotmanz/
+
+# === Installer log ===
+install.log
+
+# === Ignore compiled CLI output ===
+/dot/dot

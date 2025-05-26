@@ -1,7 +1,7 @@
 [package]
-name = "dot"
-version = "2.0.0"
-edition = "2021"
+name = "dotmanz"
+version = "2.0.4"
+edition = "2025"
 authors = ["Ayush Poudel ayushpoudel2003@gmail.com"]
 description = "dotmanz CLI – manage modular ZSH configs from the command line."
 license = "MIT"
@@ -24,3 +24,6 @@ colored = "2.1"                                     # Colorized output like your
 # log = "0.4"
 # env_logger = "0.10"
 inquire = "0.6"
+
+[build-dependencies]
+clap_complete = "4.5"

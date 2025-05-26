@@ -1,4 +1,4 @@
-name: Package dotmanz Release
+name: Release dotmanz
 
 on:
   push:
@@ -9,27 +9,21 @@ permissions:
   contents: write
 
 jobs:
-  build-and-package:
-    name: Build and Create Release Archive
+  release:
+    name: Build and Release Archive
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Install Rust
+      - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
-      - name: Install audit tool
-        run: cargo install cargo-audit
-
-      - name: Run cargo audit (vulnerability check)
-        run: cargo audit
-
-      - name: Build universal binary for macOS
+      - name: Build universal macOS binary
         run: |
           rustup target add aarch64-apple-darwin x86_64-apple-darwin
           mkdir -p target/universal
@@ -39,39 +33,40 @@ jobs:
             target/aarch64-apple-darwin/release/dot \
             target/x86_64-apple-darwin/release/dot
 
+      - name: Generate ZSH completions
+        run: |
+          mkdir -p target/completions
+          ./target/universal/dotmanz completions zsh > target/completions/_dotmanz
+
       - name: Prepare release directory
         run: |
-          mkdir -p package/dotmanz-${{ github.ref_name }}
+          mkdir -p package/dotmanz-${{ github.ref_name }}/completions
           cp target/universal/dotmanz package/dotmanz-${{ github.ref_name }}/
           cp install.sh package/dotmanz-${{ github.ref_name }}/
           cp README.md package/dotmanz-${{ github.ref_name }}/ || true
           cp -r zsh package/dotmanz-${{ github.ref_name }}/
+          cp target/completions/_dotmanz package/dotmanz-${{ github.ref_name }}/completions/
 
-      - name: Create tar.gz archive
+      - name: Create release tar.gz
         run: |
           cd package
           tar -czf dotmanz-${{ github.ref_name }}.tar.gz dotmanz-${{ github.ref_name }}
 
-      - name: Generate dynamic release notes
+      - name: Generate release notes
         run: |
           TAG=${{ github.ref_name }}
           if [ -f CHANGELOG.md ]; then
             awk "/^## $TAG/{flag=1; next} /^## /{flag=0} flag" CHANGELOG.md > body.md
-            if [ -s body.md ]; then
-              echo "Using changelog section for $TAG"
-            else
+            if [ ! -s body.md ]; then
               echo "## dotmanz $TAG" > body.md
               git log --oneline $(git describe --tags --abbrev=0 HEAD^)..HEAD >> body.md
-              echo "Using git log fallback"
             fi
           else
             echo "## dotmanz $TAG" > body.md
             echo "- Built from commit ${{ github.sha }}" >> body.md
-            echo "- Includes ZSH modules and binary" >> body.md
-            echo "Using static fallback notes"
           fi
 
-      - name: Create GitHub Release and upload asset
+      - name: Upload GitHub release
         uses: softprops/action-gh-release@v1
         with:
           name: dotmanz ${{ github.ref_name }}

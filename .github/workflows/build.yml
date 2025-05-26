@@ -1,0 +1,28 @@
+name: Build dotmanz
+
+on:
+  push:
+    branches: [main, version-*]
+  pull_request:
+
+jobs:
+  build:
+    name: Compile and Audit
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install audit tool
+        run: cargo install cargo-audit
+
+      - name: Build CLI
+        run: cargo build --release
+
+      - name: Run audit
+        run: cargo audit

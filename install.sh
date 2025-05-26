@@ -48,6 +48,17 @@ else
   echo "$SOURCE_LINE" >> "$ZSHRC"
   echo -e "${GREEN}Updated:${RESET} .zshrc with module loader"
 fi
+# Step 7: Install ZSH shell completions
+echo -e "${YELLOW}Installing shell completions...${RESET}"
+mkdir -p "$HOME/.zsh/completions"
+cp "$INSTALL_DIR/completions/_dotmanz" "$HOME/.zsh/completions/"
+
+# Patch .zshrc to load completions if not already set
+if ! grep -Fq 'fpath+=~/.zsh/completions' "$ZSHRC"; then
+  echo -e "\nfpath+=~/.zsh/completions" >> "$ZSHRC"
+  echo 'autoload -Uz compinit && compinit' >> "$ZSHRC"
+  echo -e "${GREEN}Updated:${RESET} .zshrc with completions loader"
+fi
 
 # Done
 echo -e "\n${GREEN}dotmanz installed successfully!${RESET}"

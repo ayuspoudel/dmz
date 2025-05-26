@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "dot")]
+#[command(name = "dotmanz", version)]
 #[command(about = "Manage your modular ZSH setup", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
@@ -35,5 +35,10 @@ pub enum Commands {
 
     /// Reinitialize .zshrc with all modules
     Refresh,
-    Edit{ module: Option<String> }
+    Edit{ module: Option<String> },
+    Completions {
+        /// The shell type to generate for (e.g. zsh, bash, fish)
+        #[arg(value_enum)]
+        shell: clap_complete::Shell,
+    }
 }

@@ -1,0 +1,30 @@
+name: Test dotmanz
+
+on:
+  push:
+    branches: [main, version-*]
+  pull_request:
+
+jobs:
+  test:
+    name: Run Rust tests
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Run unit tests
+        run: cargo test
+
+      - name: Check install.sh syntax
+        run: bash -n install.sh
+
+      - name: Try help command
+        run: |
+          cargo build --release
+          ./target/release/dotmanz --help

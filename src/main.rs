@@ -47,5 +47,7 @@ fn main() {
                 &mut std::io::stdout(),
             );
         }
+        Commands::Init => commands::init::run(),
+
     }
 }

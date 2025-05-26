@@ -16,14 +16,18 @@ ZSHRC="$HOME/.zshrc"
 
 # GitHub release info
 REPO="ayuspoudel/dotmanz"
-TAR_URL="https://github.com/$REPO/releases/latest/download/dotmanz-v2.0.3.tar.gz"
+VERSION="${VERSION:-v2.0.5}"
+TAR_URL="https://github.com/$REPO/releases/download/$VERSION/dotmanz-$VERSION.tar.gz"
 
 # Step 1: Prepare target
 mkdir -p "$INSTALL_DIR"
 
 # Step 2: Download and extract binary
 echo -e "${YELLOW}Downloading dotmanz binary...${RESET}"
-curl -sL "$TAR_URL" | tar -xz --strip-components=1 -C "$INSTALL_DIR"
+if ! curl -sL "$TAR_URL" | tar -xz --strip-components=1 -C "$INSTALL_DIR"; then
+  echo -e "${RED}❌ Failed to extract tarball from $TAR_URL${RESET}"
+  exit 1
+fi
 
 # Step 3: Make binary executable
 chmod +x "$INSTALL_BIN"
@@ -48,6 +52,7 @@ else
   echo "$SOURCE_LINE" >> "$ZSHRC"
   echo -e "${GREEN}Updated:${RESET} .zshrc with module loader"
 fi
+
 # Step 7: Install ZSH shell completions
 echo -e "${YELLOW}Installing shell completions...${RESET}"
 mkdir -p "$HOME/.zsh/completions"

@@ -32,6 +32,11 @@ jobs:
           lipo -create -output target/universal/dotmanz \
             target/aarch64-apple-darwin/release/dotmanz \
             target/x86_64-apple-darwin/release/dotmanz
+      
+      - name: Patch install.sh with current version
+        run: |
+          version=${{ github.ref_name }}
+          sed -i '' "s/VERSION:-v[0-9.]*/VERSION:-$version/" install.sh
 
       - name: Generate ZSH completions
         run: |

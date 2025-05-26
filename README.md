@@ -49,8 +49,8 @@ source ~/.zshrc
 
 ## Documentation
 
-* [Version 1.x Architecture](docs/v1.md)
-* [Developer Internals](docs/dev.md)
+* [Version 1.x Architecture](v1.md)
+* [Developer Internals](dev.md)
 * [Changelog](CHANGELOG.md)
 
 ---

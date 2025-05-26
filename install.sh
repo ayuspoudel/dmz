@@ -17,7 +17,8 @@ ZSHRC="$HOME/.zshrc"
 
 # Build binary
 echo -e "${YELLOW}Building release binary...${RESET}"
-cargo build --release --manifest-path "$REPO_DIR/Cargo.toml"
+cp "$REPO_DIR/dot" "$INSTALL_BIN"
+
 
 # Create install directory
 mkdir -p "$INSTALL_DIR"
@@ -45,6 +46,6 @@ else
 fi
 
 # Done
-echo -e "\n${GREEN}✅ dotmanz installed successfully!${RESET}"
+echo -e "\n${GREEN} dotmanz installed successfully!${RESET}"
 echo -e "${YELLOW}Run:${RESET} source ~/.zshrc"
 echo -e "${YELLOW}Try:${RESET} dot list"

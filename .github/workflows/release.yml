@@ -30,7 +30,7 @@ jobs:
           cargo build --release --target aarch64-apple-darwin
           cargo build --release --target x86_64-apple-darwin
           lipo -create -output target/universal/dotmanz \
-            target/aarch64-apple-darwin/release/dotmaz \
+            target/aarch64-apple-darwin/release/dotmanz \
             target/x86_64-apple-darwin/release/dotmanz
 
       - name: Generate ZSH completions

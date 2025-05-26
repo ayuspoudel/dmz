@@ -1,5 +1,7 @@
 # dotmanz
 
+[![Package dotmanz Release](https://github.com/ayuspoudel/dotmanz/actions/workflows/package.yml/badge.svg)](https://github.com/ayuspoudel/dotmanz/actions/workflows/package.yml)
+
 A modern, Rust-powered CLI tool to manage modular ZSH configuration files.
 
 ## Overview

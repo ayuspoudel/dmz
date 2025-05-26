@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 
 ---
+## v2.1.0
+
+* Introduced `dotmanz init` — a full `.zshrc` migration assistant:
+
+  * Detects and extracts aliases, exports, PATHs, functions, plugin manager lines
+  * Creates appropriate module files (e.g., `aliases.zsh`, `plugins.zsh`, etc.)
+  * Safely backs up original `.zshrc` with timestamps
+  * Adds a clean `.zshrc` that sources all dotmanz-managed modules
+  * Supports **dry-run mode** with detailed migration previews
+  * Skips duplicate lines automatically and maintains visual logs of migration
+* Interactive prompts via `inquire`
+* Uses brace matching to migrate multiline `function` blocks
+* Added grouping into `migrated/` for unclassified lines
+* Future-ready migration strategy for large `.zshrc` files
+
+This version marks the start of `dotmanz` as a full **ZSH config manager** — not just an alias tool.
+
+
+---
 
 ## v2.0.6
 

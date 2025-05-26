@@ -23,14 +23,15 @@ mkdir -p "$INSTALL_DIR"
 
 # Step 2: Download and extract binary
 echo -e "${YELLOW}Downloading dotmanz binary...${RESET}"
-curl -sL "$TAR_URL" | tar -xz -C "$INSTALL_DIR"
+curl -sL "$TAR_URL" | tar -xz --strip-components=1 -C "$INSTALL_DIR"
 
 # Step 3: Make binary executable
 chmod +x "$INSTALL_BIN"
 
 # Step 4: Copy ZSH modules
 echo -e "${YELLOW}Copying ZSH modules...${RESET}"
-curl -sL "https://github.com/$REPO/archive/refs/heads/version-1.tar.gz" | tar -xz --strip-components=2 -C "$INSTALL_DIR" "dotmanz-version-1/zsh"
+curl -sL "https://github.com/$REPO/archive/refs/heads/version-1.tar.gz" \
+  | tar -xz --strip-components=2 -C "$INSTALL_DIR" "dotmanz-version-1/zsh"
 
 # Step 5: Link to /usr/local/bin
 echo -e "${YELLOW}Linking CLI to /usr/local/bin...${RESET}"

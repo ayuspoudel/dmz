@@ -29,7 +29,7 @@ pub enum Commands {
         #[arg(long)]
         no_refresh: bool,
         module: Option<String>,
-    }
+    },
 
     /// Remove a module from .zshrc
     Remove { module: Option<String> },
@@ -42,5 +42,5 @@ pub enum Commands {
         #[arg(value_enum)]
         shell: clap_complete::Shell,
     },
-    Version
+    Version,
 }

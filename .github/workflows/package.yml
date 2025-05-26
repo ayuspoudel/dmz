@@ -42,7 +42,7 @@ jobs:
       - name: Prepare release directory
         run: |
           mkdir -p package/dotmanz-${{ github.ref_name }}
-          cp target/universal/dot package/dotmanz-${{ github.ref_name }}/
+          cp target/universal/dotmanz package/dotmanz-${{ github.ref_name }}/
           cp install.sh package/dotmanz-${{ github.ref_name }}/
           cp README.md package/dotmanz-${{ github.ref_name }}/ || true
           cp -r zsh package/dotmanz-${{ github.ref_name }}/

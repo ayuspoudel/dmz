@@ -4,24 +4,24 @@ on:
   push:
     tags:
       - 'v*'
+
 permissions:
-    contents: write
+  contents: write
 
 jobs:
   build-and-package:
     name: Build and Create Release Archive
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Rust
+      - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-            toolchain: stable
-            override: true
-
+          toolchain: stable
+          override: true
 
       - name: Install audit tool
         run: cargo install cargo-audit
@@ -29,13 +29,20 @@ jobs:
       - name: Run cargo audit (vulnerability check)
         run: cargo audit
 
-      - name: Build release binary
-        run: cargo build --release
+      - name: Build universal binary for macOS
+        run: |
+          rustup target add aarch64-apple-darwin x86_64-apple-darwin
+          mkdir -p target/universal
+          cargo build --release --target aarch64-apple-darwin
+          cargo build --release --target x86_64-apple-darwin
+          lipo -create -output target/universal/dot \
+            target/aarch64-apple-darwin/release/dot \
+            target/x86_64-apple-darwin/release/dot
 
       - name: Prepare release directory
         run: |
           mkdir -p package/dotmanz-${{ github.ref_name }}
-          cp target/release/dot package/dotmanz-${{ github.ref_name }}/
+          cp target/universal/dot package/dotmanz-${{ github.ref_name }}/
           cp install.sh package/dotmanz-${{ github.ref_name }}/
           cp README.md package/dotmanz-${{ github.ref_name }}/ || true
           cp -r zsh package/dotmanz-${{ github.ref_name }}/

@@ -7,24 +7,31 @@ on:
 
 jobs:
   test:
-    name: Run Rust tests
+    name: Run all tests
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: actions-rs/toolchain@v1
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
+      - name: Install test tools
+        run: |
+          cargo install cargo-audit
+          cargo install assert_cmd
+
       - name: Run unit tests
-        run: cargo test
+        run: cargo test --all
 
       - name: Check install.sh syntax
         run: bash -n install.sh
 
-      - name: Try help command
+      - name: Verify help command works
         run: |
           cargo build --release
           ./target/release/dotmanz --help

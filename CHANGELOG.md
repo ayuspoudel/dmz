@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## v2.0.5
+
+- Added `--no-refresh` flag to `dotmanz add`
+  - Skips automatic `.zshrc` refresh if desired
+- `dotmanz add` now auto-runs `refresh` only if editor succeeds
+  - Smart conditional behavior reduces redundant I/O
+- Improved CLI output UX with colored warnings and hints
+  - Shows refresh guidance after editing modules
+- Added snapshot tests for:
+  - `add` (module scaffold)
+  - `remove` (file deletion)
+  - `refresh` (idempotent `.zshrc` patching)
+  - CLI integration test (`dotmanz list`)
+- CI `test.yml` now validates:
+  - Install script syntax
+  - Rust builds/tests pass
+  - CLI runs with help message
+ This version focuses on robustness, test coverage, and safe automation boundaries.
+
 ## v2.0.4
 
 - Added `dotmanz completions` subcommand

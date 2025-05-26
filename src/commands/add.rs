@@ -1,42 +1,34 @@
+// src/commands/add.rs
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use crate::commands::refresh;
-
 use colored::*;
 use inquire::{Select, Text};
 
 use crate::utils::get_local_zsh_dir;
+use crate::commands::refresh;
 
-pub fn run(module: Option<&str>) {
+pub fn run(module: Option<&str>, should_refresh: bool) {
     match module {
-        Some(name) => handle_direct_add(name),
-        None => handle_interactive_add(),
+        Some(name) => handle_named_add(name, should_refresh),
+        None => handle_interactive_add(should_refresh),
     }
 }
 
-fn handle_direct_add(name: &str) {
+fn handle_named_add(name: &str, should_refresh: bool) {
     let path = get_local_zsh_dir().join(format!("{}.zsh", name));
 
     if !path.exists() {
-        println!(
-            "{} {}",
-            "Creating new module:".blue(),
-            name.green().bold()
-        );
+        println!("{} {}", "Creating new module:".blue(), name.green().bold());
         scaffold_module(&path, name);
     } else {
-        println!(
-            "{} {}",
-            "Opening existing module:".cyan(),
-            name.green()
-        );
+        println!("{} {}", "Opening existing module:".cyan(), name.green());
     }
 
-    open_editor(&path);
+    open_editor(&path, should_refresh);
 }
 
-fn handle_interactive_add() {
+fn handle_interactive_add(should_refresh: bool) {
     let zsh_dir = get_local_zsh_dir();
 
     if !zsh_dir.exists() {
@@ -82,10 +74,10 @@ fn handle_interactive_add() {
             scaffold_module(&path, &name);
         }
 
-        open_editor(&path);
+        open_editor(&path, should_refresh);
     } else {
         let path = zsh_dir.join(format!("{}.zsh", selected));
-        open_editor(&path);
+        open_editor(&path, should_refresh);
     }
 }
 
@@ -102,14 +94,10 @@ fn scaffold_module(path: &PathBuf, name: &str) {
     );
 
     fs::write(&path, content).expect("Failed to create module");
-    println!(
-        "{} {}",
-        "Created:".green().bold(),
-        path.display()
-    );
+    println!("{} {}", "Created:".green().bold(), path.display());
 }
 
-fn open_editor(path: &Path) {
+fn open_editor(path: &Path, should_refresh: bool) {
     let editor = std::env::var("EDITOR").unwrap_or_else(|_| "vi".to_string());
 
     println!(
@@ -131,11 +119,13 @@ fn open_editor(path: &Path) {
     let status = cmd.arg(path).status().expect("Failed to launch editor");
 
     if status.success() {
-        crate::commands::refresh::run();
+        if should_refresh {
+            refresh::run();
+            println!("{} Run: source ~/.zshrc to apply changes", "➤".yellow());
+        } else {
+            println!("{} You must run 'dotmanz refresh' and 'source ~/.zshrc' to apply changes.", "⚠️".yellow());
+        }
     } else {
         eprintln!("{} Failed to edit {}", "Error:".red(), path.display());
     }
 }
-
-
-

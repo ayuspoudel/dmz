@@ -3,3 +3,4 @@ pub mod remove;
 pub mod list;
 pub mod edit;
 pub mod refresh;
+pub mod init;

@@ -2,9 +2,10 @@ use std::env;
 use std::path::PathBuf;
 
 pub fn install_root() -> PathBuf {
-    dirs::home_dir()
-        .expect("Could not find home directory")
-        .join(".dotmanz")
+    if let Ok(path) = env::var("DOTMANZ_HOME") {
+        return PathBuf::from(path);
+    }
+    dirs::home_dir().expect("Could not find home dir").join(".dotmanz")
 }
 
 pub fn get_local_zsh_dir() -> PathBuf {
@@ -17,9 +18,4 @@ pub fn get_local_zshrc_path() -> PathBuf {
         .join(".zshrc")
 }
 
-pub fn install_root() -> PathBuf {
-    if let Ok(path) = env::var("DOTMANZ_HOME") {
-        return PathBuf::from(path);
-    }
-    dirs::home_dir().expect("Could not find home dir").join(".dotmanz")
-}
+

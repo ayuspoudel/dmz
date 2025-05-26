@@ -1,0 +1,49 @@
+name: Package dotmanz Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-package:
+    name: Build and Create Release Archive
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions/setup-rust@v1
+        with:
+          rust-version: stable
+
+      - name: Install audit tool
+        run: cargo install cargo-audit
+
+      - name: Run cargo audit (vulnerability check)
+        run: cargo audit
+
+      - name: Build release binary
+        run: cargo build --release
+
+      - name: Prepare release directory
+        run: |
+          mkdir -p package/dotmanz-${{ github.ref_name }}
+          cp target/release/dot package/dotmanz-${{ github.ref_name }}/
+          cp install.sh package/dotmanz-${{ github.ref_name }}/
+          cp README.md package/dotmanz-${{ github.ref_name }}/ || true
+          cp -r zsh package/dotmanz-${{ github.ref_name }}/
+
+      - name: Create tar.gz archive
+        run: |
+          cd package
+          tar -czf dotmanz-${{ github.ref_name }}.tar.gz dotmanz-${{ github.ref_name }}
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: package/dotmanz-${{ github.ref_name }}.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

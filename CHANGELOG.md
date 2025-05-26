@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+---
+
+## v2.0.6
+
+* Updated `install.sh` to use a dynamic `VERSION` environment variable so releases are version-aware
+* Shell completions are now installed automatically during setup
+* `.zshrc` patching for module loader and completions is now idempotent and safe to re-run
+* The `release.yml` workflow now automatically injects the correct version into `install.sh` before packaging
+* Archive download and extraction are now guarded with error handling and fallback behavior
+* Release archive includes the binary, zsh modules, completions, and installer script as expected
+
+This version focuses on install-time reliability and future-proof release packaging.
+
+---
+
 ## v2.0.5
 
 - Added `--no-refresh` flag to `dotmanz add`

@@ -22,7 +22,7 @@ cp "$REPO_DIR/dot" "$INSTALL_BIN"
 
 # Create install directory
 mkdir -p "$INSTALL_DIR"
-cp "$REPO_DIR/target/release/dot" "$INSTALL_BIN"
+cp ./dot "$INSTALL_DIR/"
 chmod +x "$INSTALL_BIN"
 
 # Copy zsh modules

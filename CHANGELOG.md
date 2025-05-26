@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 ---
+## v2.0.2
+
+- Build universal macOS binary using GitHub Actions (`aarch64` + `x86_64`)
+- Automatically bundle universal binary in `.tar.gz` archive
+- Updated install process to fix exec format errors on Apple Silicon Macs
+
+---
 
 ## v2.0.1
 

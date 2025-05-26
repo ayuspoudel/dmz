@@ -15,7 +15,7 @@ fn main() {
             commands::list::run(*verbose, module.as_deref(), filter.as_deref());
         }
         Commands::Add { module } => {
-            commands::add::run(module.as_deref());
+            commands::add::run(module.as_deref(), !no_refresh);
         }
         Commands::Remove { module } => {
             match module.as_deref() {

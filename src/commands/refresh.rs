@@ -46,4 +46,5 @@ pub fn run() {
             eprintln!("{RED}Error:{RESET} Failed to write to {} — {}", zshrc_path.display(), e);
         }
     }
+    refresh::run()
 }

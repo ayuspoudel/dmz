@@ -2,7 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## v2.0.3
+- Fixed incorrect path resolution in installed CLI binary
+    - Replaced project_root() logic with a dynamic $HOME/.dotmanz path resolver
+- Added fallback support for DOTMANZ_HOME environment variable
+    - Useful for sandboxing or testing in alternate directories
+- Ensured dot binary runs reliably after installation regardless of working directory
+    - Updated utils.rs to use the dirs crate for cross-platform home directory resolution
+- Improved consistency between install script and binary behavior
+    - Strengthened long-term portability and modular ZSH loading
+
 ---
+
 ## v2.0.2
 
 - Build universal macOS binary using GitHub Actions (`aarch64` + `x86_64`)

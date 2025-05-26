@@ -40,5 +40,6 @@ pub enum Commands {
         /// The shell type to generate for (e.g. zsh, bash, fish)
         #[arg(value_enum)]
         shell: clap_complete::Shell,
-    }
+    },
+    Version
 }

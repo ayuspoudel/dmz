@@ -43,4 +43,7 @@ pub enum Commands {
         shell: clap_complete::Shell,
     },
     Version,
+    /// Migrate existing .zshrc into modular dotmanz setup
+    Init,
+
 }

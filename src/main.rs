@@ -5,6 +5,7 @@ mod constants;
 
 use clap::Parser;
 use cli::{Cli, Commands};
+use clap::CommandFactory;
 
 fn main() {
     let cli = Cli::parse();

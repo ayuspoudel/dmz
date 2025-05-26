@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## v2.0.4
+
+- Added `dotmanz completions` subcommand
+  - Supports ZSH completion script generation (`dotmanz completions zsh`)
+  - Adds tab-completion for commands and flags
+- Shell completion auto-installed during setup
+  - `_dotmanz` is bundled in the release archive under `completions/`
+  - `install.sh` copies it to `~/.zsh/completions` and patches `.zshrc`
+- Modularized GitHub Actions into 3 workflows:
+  - `build.yml`: Compiles and audits every commit
+  - `test.yml`: Runs `cargo test`, validates install.sh
+  - `release.yml`: Builds universal binary and uploads `.tar.gz` on tags
+- New release archive includes:
+  - `dotmanz` binary
+  - `zsh/` module folder
+  - `completions/_dotmanz` for ZSH shell completion
+  - `install.sh` for seamless setup
+-  Cleanup: Removed legacy `package.yml` workflow
+
+---
+
 ## v2.0.3
 - Fixed incorrect path resolution in installed CLI binary
     - Replaced project_root() logic with a dynamic $HOME/.dotmanz path resolver

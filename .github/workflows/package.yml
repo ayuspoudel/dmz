@@ -41,9 +41,31 @@ jobs:
           cd package
           tar -czf dotmanz-${{ github.ref_name }}.tar.gz dotmanz-${{ github.ref_name }}
 
-      - name: Upload release asset
+      - name: Generate dynamic release notes
+        run: |
+          TAG=${{ github.ref_name }}
+          if [ -f CHANGELOG.md ]; then
+            awk "/^## $TAG/{flag=1; next} /^## /{flag=0} flag" CHANGELOG.md > body.md
+            if [ -s body.md ]; then
+              echo "Using changelog section for $TAG"
+            else
+              echo "## dotmanz $TAG" > body.md
+              git log --oneline $(git describe --tags --abbrev=0 HEAD^)..HEAD >> body.md
+              echo "Using git log fallback"
+            fi
+          else
+            echo "## dotmanz $TAG" > body.md
+            echo "- Built from commit ${{ github.sha }}" >> body.md
+            echo "- Includes ZSH modules and binary" >> body.md
+            echo "Using static fallback notes"
+          fi
+
+      - name: Create GitHub Release and upload asset
         uses: softprops/action-gh-release@v1
         with:
+          name: dotmanz ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          body_path: body.md
           files: package/dotmanz-${{ github.ref_name }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

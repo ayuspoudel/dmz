@@ -14,9 +14,10 @@ fn main() {
         Commands::List { verbose, module, filter } => {
             commands::list::run(*verbose, module.as_deref(), filter.as_deref());
         }
-        Commands::Add { module } => {
+        Commands::Add { module, no_refresh } => {
             commands::add::run(module.as_deref(), !no_refresh);
         }
+
         Commands::Remove { module } => {
             match module.as_deref() {
                 Some(name) => commands::remove::run(name),

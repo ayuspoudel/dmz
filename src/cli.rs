@@ -26,9 +26,10 @@ pub enum Commands {
 
     /// Add a module to .zshrc
     Add {
-        /// Optional: name of the module to edit directly
+        #[arg(long)]
+        no_refresh: bool,
         module: Option<String>,
-    },
+    }
 
     /// Remove a module from .zshrc
     Remove { module: Option<String> },

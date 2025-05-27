@@ -4,6 +4,7 @@ zsh/private.zsh
 # VSCode
 .vscode/
 
+test-env
 # OS
 .DS_Store
 # Rust

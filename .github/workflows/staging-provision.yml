@@ -20,13 +20,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
       
-      - name: Set up SSH directory and write public key
+      - name: Write SSH Public Key
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY_PUB }}" > ~/.ssh/dmz-key.pub
-          chmod 600 ~/.ssh/dmz-key.pub
-          echo "Public key file contents:"
-          cat ~/.ssh/dmz-key.pub
+          mkdir -p .ssh
+          echo "${{ secrets.SSH_KEY_PUB }}" > .ssh/dmz-key.pub
+          chmod 600 .ssh/dmz-key.pub
 
 
       - name: Setup Terraform

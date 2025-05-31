@@ -35,7 +35,7 @@ variable "key_name" {
 
 variable "public_key_path" {
   type    = string
-  default = "~/.ssh/dmz-key.pub"
+  default = "${path.module}/.ssh/dmz-key.pub"
 }
 
 variable "ami" {

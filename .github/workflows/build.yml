@@ -17,6 +17,10 @@ jobs:
         with:
           toolchain: stable
           override: true
+      - name: Clean build cache
+        run: cargo clean
+      - name: Remove Cargo.lock (optional)
+        run: rm -f Cargo.lock
 
       - name: Install audit tool
         run: cargo install cargo-audit

@@ -77,3 +77,6 @@ install.log
 
 # === Ignore compiled CLI output ===
 /dot/dot
+dmz
+dmz.exe
+.dmz/

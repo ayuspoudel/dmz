@@ -1,4 +1,4 @@
-name: Release dotmanz
+name: Release dmz
 
 on:
   push:
@@ -29,9 +29,9 @@ jobs:
           mkdir -p target/universal
           cargo build --release --target aarch64-apple-darwin
           cargo build --release --target x86_64-apple-darwin
-          lipo -create -output target/universal/dotmanz \
-            target/aarch64-apple-darwin/release/dotmanz \
-            target/x86_64-apple-darwin/release/dotmanz
+          lipo -create -output target/universal/dmz \
+            target/aarch64-apple-darwin/release/dmz \
+            target/x86_64-apple-darwin/release/dmz
       
       - name: Patch install.sh with current version
         run: |
@@ -41,21 +41,21 @@ jobs:
       - name: Generate ZSH completions
         run: |
           mkdir -p target/completions
-          ./target/universal/dotmanz completions zsh > target/completions/_dotmanz
+          ./target/universal/dmz completions zsh > target/completions/_dmz
 
       - name: Prepare release directory
         run: |
-          mkdir -p package/dotmanz-${{ github.ref_name }}/completions
-          cp target/universal/dotmanz package/dotmanz-${{ github.ref_name }}/
-          cp install.sh package/dotmanz-${{ github.ref_name }}/
-          cp README.md package/dotmanz-${{ github.ref_name }}/ || true
-          cp -r zsh package/dotmanz-${{ github.ref_name }}/
-          cp target/completions/_dotmanz package/dotmanz-${{ github.ref_name }}/completions/
+          mkdir -p package/dmz-${{ github.ref_name }}/completions
+          cp target/universal/dmz package/dmz-${{ github.ref_name }}/
+          cp install.sh package/dmz-${{ github.ref_name }}/
+          cp README.md package/dmz-${{ github.ref_name }}/ || true
+          cp -r zsh package/dmz-${{ github.ref_name }}/
+          cp target/completions/_dmz package/dmz-${{ github.ref_name }}/completions/
 
       - name: Create release tar.gz
         run: |
           cd package
-          tar -czf dotmanz-${{ github.ref_name }}.tar.gz dotmanz-${{ github.ref_name }}
+          tar -czf dmz-${{ github.ref_name }}.tar.gz dmz-${{ github.ref_name }}
 
       - name: Generate release notes
         run: |
@@ -63,20 +63,20 @@ jobs:
           if [ -f CHANGELOG.md ]; then
             awk "/^## $TAG/{flag=1; next} /^## /{flag=0} flag" CHANGELOG.md > body.md
             if [ ! -s body.md ]; then
-              echo "## dotmanz $TAG" > body.md
+              echo "## dmz $TAG" > body.md
               git log --oneline $(git describe --tags --abbrev=0 HEAD^)..HEAD >> body.md
             fi
           else
-            echo "## dotmanz $TAG" > body.md
+            echo "## dmz $TAG" > body.md
             echo "- Built from commit ${{ github.sha }}" >> body.md
           fi
 
       - name: Upload GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          name: dotmanz ${{ github.ref_name }}
+          name: dmz ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           body_path: body.md
-          files: package/dotmanz-${{ github.ref_name }}.tar.gz
+          files: package/dmz-${{ github.ref_name }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

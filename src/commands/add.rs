@@ -123,7 +123,7 @@ fn open_editor(path: &Path, should_refresh: bool) {
             refresh::run();
             println!("{} Run: source ~/.zshrc to apply changes", "➤".yellow());
         } else {
-            println!("{} You must run 'dotmanz refresh' and 'source ~/.zshrc' to apply changes.", "⚠️".yellow());
+            println!("{} You must run 'dmz refresh' and 'source ~/.zshrc' to apply changes.", "⚠️".yellow());
         }
     } else {
         eprintln!("{} Failed to edit {}", "Error:".red(), path.display());

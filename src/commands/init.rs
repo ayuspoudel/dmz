@@ -9,20 +9,20 @@ use inquire::{Confirm, Select};
 pub fn run() {
     let home = dirs::home_dir().expect("Could not find home directory");
     let zshrc_path = home.join(".zshrc");
-    let dotmanz_dir = home.join(".dotmanz/zsh");
-    let migrated_dir = dotmanz_dir.join("migrated");
+    let dmz_dir = home.join(".dmz/zsh");
+    let migrated_dir = dmz_dir.join("migrated");
 
     let dry_run = Select::new("How do you want to run the migration?", vec!["Apply changes", "Dry run (just preview)"])
         .prompt()
         .map(|choice| choice == "Dry run (just preview)")
         .unwrap_or(false);
 
-    fs::create_dir_all(&migrated_dir).expect("Failed to create .dotmanz/zsh directory");
-    println!("{} Created {}", "✔".green(), dotmanz_dir.display());
+    fs::create_dir_all(&migrated_dir).expect("Failed to create .dmz/zsh directory");
+    println!("{} Created {}", "✔".green(), dmz_dir.display());
 
     if zshrc_path.exists() && !dry_run {
         let timestamp = Local::now().format("%Y%m%d_%H%M%S");
-        let backup_path = home.join(format!(".zshrc.dotmanz.bak.{}", timestamp));
+        let backup_path = home.join(format!(".zshrc.dmz.bak.{}", timestamp));
         fs::copy(&zshrc_path, &backup_path).expect("Failed to back up .zshrc");
         println!("{} Backed up .zshrc to {}", "✔".green(), backup_path.display());
     }
@@ -95,14 +95,14 @@ pub fn run() {
         return;
     }
 
-    write_module(&dotmanz_dir.join("aliases.zsh"), &aliases);
-    write_module(&dotmanz_dir.join("exports.zsh"), &exports);
-    write_module(&dotmanz_dir.join("path.zsh"), &paths);
-    write_module(&dotmanz_dir.join("plugins.zsh"), &plugins);
-    write_module(&dotmanz_dir.join("functions.zsh"), &functions);
+    write_module(&dmz_dir.join("aliases.zsh"), &aliases);
+    write_module(&dmz_dir.join("exports.zsh"), &exports);
+    write_module(&dmz_dir.join("path.zsh"), &paths);
+    write_module(&dmz_dir.join("plugins.zsh"), &plugins);
+    write_module(&dmz_dir.join("functions.zsh"), &functions);
     write_module(&migrated_dir.join("misc.zsh"), &misc);
 
-    let preview = "# dotmanz managed zshrc\nfor f in $HOME/.dotmanz/zsh/**/*.zsh; do source \"$f\"; done\n\nfpath+=~/.zsh/completions\nautoload -Uz compinit && compinit";
+    let preview = "# dmz managed zshrc\nfor f in $HOME/.dmz/zsh/**/*.zsh; do source \"$f\"; done\n\nfpath+=~/.zsh/completions\nautoload -Uz compinit && compinit";
     println!("\n{} Preview of new .zshrc:\n{}\n", "🔍".blue(), preview);
 
     let confirm = Confirm::new("Do you want to overwrite your .zshrc with this content?")
@@ -114,7 +114,7 @@ pub fn run() {
         let mut new_zshrc = File::create(&zshrc_path).expect("Failed to overwrite .zshrc");
         writeln!(new_zshrc, "{}", preview).expect("Failed to write to .zshrc");
 
-        println!("{} .zshrc is now managed by dotmanz.", "✔".green());
+        println!("{} .zshrc is now managed by dmz.", "✔".green());
         println!("{} Run: {}", "➡", "source ~/.zshrc".yellow());
     } else {
         println!("{} Aborted: .zshrc was not modified.", "⚠".yellow());

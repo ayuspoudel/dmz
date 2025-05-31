@@ -80,3 +80,15 @@ install.log
 dmz
 dmz.exe
 .dmz/
+
+
+# === Ignore terraform  ===
+# Ignore Terraform state files
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/crash.log
+terraform/override.tf
+terraform/override.tf.json
+terraform/*.tfplan

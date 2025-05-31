@@ -22,7 +22,10 @@ jobs:
         with:
           toolchain: stable
           override: true
-
+      - name: Clean build cache
+        run: cargo clean
+      - name: Remove Cargo.lock (optional)
+        run: rm -f Cargo.lock
       - name: Build universal macOS binary
         run: |
           rustup target add aarch64-apple-darwin x86_64-apple-darwin

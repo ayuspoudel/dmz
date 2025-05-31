@@ -11,43 +11,44 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        Commands::List { verbose, module, filter } => {
+        Some(Commands::List { verbose, module, filter }) => {
             commands::list::run(*verbose, module.as_deref(), filter.as_deref());
         }
-        Commands::Add { module, no_refresh } => {
+        Some(Commands::Add { module, no_refresh }) => {
             commands::add::run(module.as_deref(), !no_refresh);
         }
-
-        Commands::Remove { module } => {
+        Some(Commands::Remove { module }) => {
             match module.as_deref() {
                 Some(name) => commands::remove::run(name),
-                None => commands::remove::run(""), // triggers interactive mode
+                None => commands::remove::run(""),
             }
         }
-        Commands::Refresh {} => {
+        Some(Commands::Refresh {}) => {
             commands::refresh::run();
         }
-        Commands::Edit { module } => {
+        Some(Commands::Edit { module }) => {
             commands::edit::run(module.as_deref());
         }
-        Commands::Version => {
+        Some(Commands::Version) => {
             println!(
                 "\x1b[1;33mdmz version:\x1b[0m {}",
                 env!("CARGO_PKG_VERSION")
             );
         }
-        Commands::Completions { shell } => {
+        Some(Commands::Completions { shell }) => {
             let mut cmd = Cli::command();
             let name = cmd.get_name().to_string();
-
-            clap_complete::generate(
-                *shell,
-                &mut cmd,
-                name,
-                &mut std::io::stdout(),
-            );
+            clap_complete::generate(*shell, &mut cmd, name, &mut std::io::stdout());
         }
-        Commands::Init => commands::init::run(),
-
+        Some(Commands::Init) => {
+            commands::init::run();
+        }
+        None => {
+            eprintln!("dmz: error: the following arguments are required: <command>\n");
+            eprintln!("usage: dmz [options] <command> [<args>...]\n");
+            eprintln!("To see help text, run:\n  dmz help\n  dmz <command> help");
+            std::process::exit(1);
+        }
     }
+
 }

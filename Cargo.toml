@@ -1,6 +1,6 @@
 [package]
 name = "dmz"
-version = "2.0.4"
+version = "3.0.0"
 edition = "2021"
 authors = ["Ayush Poudel ayushpoudel2003@gmail.com"]
 description = "dmz CLI – manage modular ZSH configs from the command line."

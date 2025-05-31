@@ -1,11 +1,12 @@
 #!/bin/bash
-# This script performs a final release readiness check.
-# Written to act as a final approval gate before a version is considered stable for tagging and promotion.
+# Verifies SSH connectivity to the test server.
 
-set -e
+set -euo pipefail
 
-echo "[INFO] Final readiness check for release..."
+TEST_HOST="${DMZ_TEST_HOST:-ubuntu@your-test-server}"
+echo "[INFO] Checking SSH access to: $TEST_HOST"
 
-# Insert validation hooks here if needed (e.g. changelog, tag pattern, etc)
-
-echo "[SUCCESS] All conditions met. Ready to release."
+ssh -o BatchMode=yes -o ConnectTimeout=10 "$TEST_HOST" 'echo "[OK] SSH connection successful."' || {
+  echo "[ERROR] SSH connection failed to $TEST_HOST"
+  exit 1
+}

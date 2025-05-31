@@ -1,0 +1,22 @@
+name: Staging Pipeline
+
+on:
+  push:
+    branches:
+      - 'stg/v*'
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/staging/provision.yml
+
+  build:
+    uses: ./.github/workflows/staging/build.yml
+    needs: terraform
+    with:
+      version: ${{ github.ref_name }}
+
+  test:
+    uses: ./.github/workflows/staging/test.yml
+    needs: build
+    secrets:
+      ssh_key: ${{ secrets.SSH_KEY }}

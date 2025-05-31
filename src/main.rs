@@ -32,7 +32,7 @@ fn main() {
         }
         Commands::Version => {
             println!(
-                "\x1b[1;33mdotmanz version:\x1b[0m {}",
+                "\x1b[1;33mdmz version:\x1b[0m {}",
                 env!("CARGO_PKG_VERSION")
             );
         }

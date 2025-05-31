@@ -1,13 +1,13 @@
 [package]
-name = "dotmanz"
+name = "dmz"
 version = "2.0.4"
 edition = "2021"
 authors = ["Ayush Poudel ayushpoudel2003@gmail.com"]
-description = "dotmanz CLI – manage modular ZSH configs from the command line."
+description = "dmz CLI – manage modular ZSH configs from the command line."
 license = "MIT"
 readme = "../README.md"
-homepage = "https://github.com/ayushpoudel/dotmanz"
-repository = "https://github.com/ayushpoudel/dotmanz"
+homepage = "https://github.com/ayushpoudel/dmz"
+repository = "https://github.com/ayushpoudel/dmz"
 keywords = ["zsh", "cli", "dotfiles", "automation"]
 categories = ["command-line-utilities"]
 publish = false
@@ -16,7 +16,7 @@ publish = false
 clap = { version = "4.5", features = ["derive"] }   # Command-line interface
 dirs = "5.0.1"                                        # Cross-platform user dirs
 regex = "1.10"                                      # For editing lines in .zshrc
-walkdir = "2.5"                                     # Traverse ~/.dotmanz/zsh/
+walkdir = "2.5"                                     # Traverse ~/.dmz/zsh/
 anyhow = "1.0"                                      # Ergonomic error handling
 colored = "2.1"                                     # Colorized output like your shell script
 

@@ -1,4 +1,4 @@
-name: Build dotmanz
+name: Build dmz
 
 on:
   push:

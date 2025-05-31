@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "dotmanz", version)]
+#[command(name = "dmz", version)]
 #[command(about = "Manage your modular ZSH setup", long_about = None)]
 pub struct Cli {
     #[command(subcommand)]
@@ -43,7 +43,7 @@ pub enum Commands {
         shell: clap_complete::Shell,
     },
     Version,
-    /// Migrate existing .zshrc into modular dotmanz setup
+    /// Migrate existing .zshrc into modular dmz setup
     Init,
 
 }

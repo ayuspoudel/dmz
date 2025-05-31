@@ -25,7 +25,7 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./.deployment/staging
+        working-directory: ./deployment/staging/
       - name: Checkout Code
         uses: actions/checkout@v4
 

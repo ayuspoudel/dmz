@@ -4,27 +4,27 @@ set -e
 # Define paths
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEST_HOME="$ROOT_DIR/test-env"
-DOTMANZ_BIN="$ROOT_DIR/target/debug/dotmanz"
+dmz_BIN="$ROOT_DIR/target/debug/dmz"
 FAKE_ZSHRC="$TEST_HOME/.zshrc"
-FAKE_DOTMANZ="$TEST_HOME/.dotmanz"
+FAKE_dmz="$TEST_HOME/.dmz"
 
 # Rebuild the CLI
-echo "[🔧] Building dotmanz..."
+echo "[🔧] Building dmz..."
 cargo build
 
 # Prepare test directories
-mkdir -p "$FAKE_DOTMANZ/zsh"
-mkdir -p "$FAKE_DOTMANZ/completions"
+mkdir -p "$FAKE_dmz/zsh"
+mkdir -p "$FAKE_dmz/completions"
 
 # Create a clean .zshrc if it doesn't exist
 if [ ! -f "$FAKE_ZSHRC" ]; then
-  echo "# dotmanz sandbox .zshrc" > "$FAKE_ZSHRC"
-  echo "for f in \$HOME/.dotmanz/zsh/*.zsh; do source \"\$f\"; done" >> "$FAKE_ZSHRC"
-  echo "fpath+=\$HOME/.dotmanz/completions" >> "$FAKE_ZSHRC"
+  echo "# dmz sandbox .zshrc" > "$FAKE_ZSHRC"
+  echo "for f in \$HOME/.dmz/zsh/*.zsh; do source \"\$f\"; done" >> "$FAKE_ZSHRC"
+  echo "fpath+=\$HOME/.dmz/completions" >> "$FAKE_ZSHRC"
   echo "autoload -Uz compinit && compinit" >> "$FAKE_ZSHRC"
 fi
 
-# Run dotmanz with test HOME
-echo "[🚀] Running dotmanz in sandbox:"
+# Run dmz with test HOME
+echo "[🚀] Running dmz in sandbox:"
 echo "HOME=$TEST_HOME"
-HOME="$TEST_HOME" "$DOTMANZ_BIN" "$@"
+HOME="$TEST_HOME" "$dmz_BIN" "$@"

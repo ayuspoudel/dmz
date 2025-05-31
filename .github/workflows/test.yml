@@ -1,4 +1,4 @@
-name: Test dotmanz
+name: Test dmz
 
 on:
   push:
@@ -34,4 +34,4 @@ jobs:
       - name: Verify help command works
         run: |
           cargo build --release
-          ./target/release/dotmanz --help
+          ./target/release/dmz --help

@@ -1,24 +1,24 @@
-# dotmanz
+# dmz
 
-[![Build dotmanz](https://github.com/ayuspoudel/dotmanz/actions/workflows/build.yml/badge.svg)](https://github.com/ayuspoudel/dotmanz/actions/workflows/build.yml)
-[![Test dotmanz](https://github.com/ayuspoudel/dotmanz/actions/workflows/test.yml/badge.svg)](https://github.com/ayuspoudel/dotmanz/actions/workflows/test.yml)
-[![Release dotmanz](https://github.com/ayuspoudel/dotmanz/actions/workflows/release.yml/badge.svg)](https://github.com/ayuspoudel/dotmanz/actions/workflows/release.yml)\
+[![Build dmz](https://github.com/ayuspoudel/dmz/actions/workflows/build.yml/badge.svg)](https://github.com/ayuspoudel/dmz/actions/workflows/build.yml)
+[![Test dmz](https://github.com/ayuspoudel/dmz/actions/workflows/test.yml/badge.svg)](https://github.com/ayuspoudel/dmz/actions/workflows/test.yml)
+[![Release dmz](https://github.com/ayuspoudel/dmz/actions/workflows/release.yml/badge.svg)](https://github.com/ayuspoudel/dmz/actions/workflows/release.yml)\
 A modern, Rust-powered CLI tool to manage modular ZSH configuration files.
 
 ## Overview
 
-`dotmanz` is a command-line utility that helps developers organize, edit, and interact with modular `.zsh` files through an intuitive CLI experience. Instead of manually editing config files, you can now use commands like:
+`dmz` is a command-line utility that helps developers organize, edit, and interact with modular `.zsh` files through an intuitive CLI experience. Instead of manually editing config files, you can now use commands like:
 
 ```bash
-dotmanz list
+dmz list
 ```
 
 ```bash
-dotmanz add aws
+dmz add aws
 ```
 
 ```bash
-dotmanz edit git
+dmz edit git
 ```
 
 ## Features (v2.0.0+)

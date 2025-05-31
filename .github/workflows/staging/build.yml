@@ -1,0 +1,29 @@
+name: Build DMZ Binary
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Bump Version
+        run: .pipeline/bump-version.sh ${{ inputs.version }}
+
+      - name: Build Release
+        run: .pipeline/build-release.sh
+
+      - name: Upload Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: dmz-binary
+          path: target/release/dmz

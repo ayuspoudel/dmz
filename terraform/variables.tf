@@ -40,7 +40,7 @@ variable "public_key_path" {
 
 variable "ami" {
   type    = string
-  default = "ami-0c02fb55956c7d316" # Ubuntu 22.04
+  default = "ami-084568db4383264d4" # Ubuntu 22.04
 }
 
 variable "instance_type" {

@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'stg/v*'
-
+   
 jobs:
   terraform:
     uses: ./.github/workflows/staging-provision.yml

@@ -1,23 +1,23 @@
 #!/bin/bash
-# This script runs basic functional smoke tests on the remote machine where dmz was deployed.
-# Written to validate that major subcommands like --help, list, refresh are working as expected.
+# Runs smoke tests on the remote machine to verify dmz works.
 
-set -e
+set -euo pipefail
 
-TEST_HOST="${DMZ_TEST_HOST:-user@your-test-server}"
+TEST_HOST="${DMZ_TEST_HOST:-ubuntu@your-test-server}"
 
-echo "[INFO] Running remote smoke tests on $TEST_HOST..."
+echo "[INFO] Running smoke tests on $TEST_HOST"
 
 ssh "$TEST_HOST" <<'EOF'
 set -e
-echo "[INFO] Checking dmz --help..."
-dmz --help
 
-echo "[INFO] Checking dmz list..."
-dmz list
+echo "[TEST] dmz --help"
+dmz --help > /dev/null
 
-echo "[INFO] Checking dmz refresh..."
-dmz refresh
+echo "[TEST] dmz list"
+dmz list > /dev/null
 
-echo "[SUCCESS] All dmz smoke tests passed"
+echo "[TEST] dmz refresh"
+dmz refresh > /dev/null
+
+echo "[SUCCESS] All smoke tests passed."
 EOF

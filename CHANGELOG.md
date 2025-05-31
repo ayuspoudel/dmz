@@ -2,6 +2,72 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.0.0 – The Birth of `dmz`
+
+Formerly known as `dotmanz`, now rebranded as `dmz` — a faster, smarter, and extensible ZSH system manager.
+
+#### Highlights
+
+- Renamed project from `dotmanz` to `dmz`
+  - All binaries, paths (`~/.dotmanz` → `~/.dmz`), scripts, completions, and documentation updated
+  - GitHub repository renamed; install script and release packaging fully migrated
+  - Optional symlink (`dotmanz` → `dmz`) available for backward compatibility
+
+#### Modular ZSH System
+
+- Runtime modules now live in `zsh_modules/` (no hardcoded `.zsh` content in Rust)
+- Clean separation of module categories: `core/`, `devtools/`, `prompt/`, etc.
+- Added future support for `manifest.yaml` files per module
+
+#### Bootstrap and Install Mode
+
+- New `dmz install` command
+  - Installs ZSH, Powerlevel10k, Nerd Fonts, and other shell dependencies
+  - Patches `.zshrc` with a clean, idempotent loader
+  - Copies over curated `.zsh` modules and completions
+
+#### CLI Improvements
+
+- `dmz init`: migrates legacy `.zshrc` into modular structure
+- `dmz add <mod>`: enables a module by symlinking
+- `dmz edit <mod>`: opens a module in the editor
+- `dmz remove <mod>`: disables a module without deleting it
+- `dmz refresh`: regenerates `.zshrc` and completions
+- `dmz list`: lists all available and enabled modules
+
+#### Smarter `.zshrc` Migration
+
+- `dmz init` now:
+  - Detects aliases, exports, PATH updates, functions, and plugin manager blocks
+  - Groups unrecognized lines into a `migrated/` module
+  - Creates timestamped backup of the original `.zshrc`
+  - Supports `--dry-run` with preview output
+  - Uses brace matching to handle multiline function definitions
+
+#### CI and Packaging Updates
+
+- GitHub Actions workflows renamed and updated:
+  - `build.yml`, `test.yml`, and `release.yml`
+- Release builds now include a universal macOS binary (`aarch64` + `x86_64`)
+- Completion file `_dmz` is generated and packaged
+
+#### Release Artifacts
+
+- `dmz` universal binary
+- ZSH modules directory (`zsh/`)
+- Completion script (`_dmz`)
+- Installer script (`install.sh`)
+- Packaged as `dmz-<version>.tar.gz` for GitHub releases
+
+#### `~/.dmz/` Becomes Config Home
+
+- Stores enabled modules
+- Stores completions
+- Central source for modular ZSH configuration
+
+With version 3.0.0, `dmz` evolves into a complete ZSH configuration manager and developer environment bootstrapper.
+
+
 ---
 ## v2.1.0
 

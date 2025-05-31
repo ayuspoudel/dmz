@@ -92,3 +92,36 @@ terraform/crash.log
 terraform/override.tf
 terraform/override.tf.json
 terraform/*.tfplan
+
+# Terraform local files and state
+.deployment/**/.terraform/
+.deployment/**/.terraform.lock.hcl
+.deployment/**/terraform.tfstate
+.deployment/**/terraform.tfstate.backup
+.deployment/**/*.tfplan
+
+# Ignore SSH keys if ever created dynamically
+.deployment/**/dmz-key*
+!.deployment/**/dmz-key.pub  # Only allow pubkey if needed
+
+# Rust target and build artifacts
+/target/
+**/*.rs.bk
+
+# IDE/editor junk
+*.swp
+*.swo
+*.DS_Store
+.idea/
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Node/npm (just in case future additions)
+/node_modules/
+
+# Backup files
+*~

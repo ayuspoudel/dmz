@@ -22,10 +22,14 @@ jobs:
       
       - name: Write SSH Public Key
         run: |
-          mkdir -p .ssh
-          echo "${{ secrets.SSH_KEY_PUB }}" > .ssh/dmz-key.pub
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY_PUB }}" > ~/.ssh/dmz-key.pub
           chmod 600 .ssh/dmz-key.pub
 
+
+      - name: Check if ssh file was written
+        run: |
+          cat ~/.ssh/dmz-key.pub
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

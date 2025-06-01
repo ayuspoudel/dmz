@@ -49,5 +49,5 @@ jobs:
         working-directory: .deployment/staging
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -var="public_key_path=/home/runner/.ssh/dmz-key.pub" -auto-approve
         working-directory: .deployment/staging

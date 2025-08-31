@@ -38,10 +38,18 @@ Visit [Releases](https://github.com/ayuspoudel/dotmanz/releases) and download th
 Or via terminal:
 
 ```bash
-curl -L -o dotmanz.tar.gz https://github.com/ayuspoudel/dotmanz/releases/download/v2.0.2/dotmanz-v2.0.2.tar.gz
-tar -xzf dotmanz.tar.gz
-cd dotmanz-v2.0.2
+# Download the latest release (v2.2.0 here, replace with the newest tag if needed)
+curl -L -o dmz.tar.gz https://github.com/ayuspoudel/dmz/releases/download/v2.2.0/dmz-v2.2.0.tar.gz
+
+# Extract
+tar -xzf dmz.tar.gz
+
+# Enter package dir
+cd dmz-v2.2.0
+
+# Run installer
 ./install.sh
+
 ```
 
 ### 2. Reload your shell

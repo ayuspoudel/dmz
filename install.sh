@@ -17,11 +17,20 @@ REPO="ayuspoudel/dmz"
 # Allow user to override version: VERSION=v2.2.0 ./install.sh
 VERSION="${VERSION:-}"
 
+# Detect OS + ARCH
+OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+ARCH=$(uname -m)
+case "$ARCH" in
+  x86_64) ARCH="amd64" ;;
+  arm64|aarch64) ARCH="arm64" ;;
+  *) echo -e "${RED}Unsupported architecture: $ARCH${RESET}"; exit 1 ;;
+esac
+
 # Step 1: Figure out which version to install
 if [[ -z "$VERSION" ]]; then
   echo -e "${YELLOW}Fetching latest release tag...${RESET}"
   VERSION=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
-    | grep -Po '"tag_name": "\K.*?(?=")')
+    | sed -n 's/.*"tag_name": "\(.*\)".*/\1/p')
 fi
 
 if [[ -z "$VERSION" ]]; then
@@ -29,9 +38,9 @@ if [[ -z "$VERSION" ]]; then
   exit 1
 fi
 
-TAR_URL="https://github.com/$REPO/releases/download/$VERSION/dmz-$VERSION.tar.gz"
+TAR_URL="https://github.com/$REPO/releases/download/$VERSION/dmz-${VERSION}-${OS}-${ARCH}.tar.gz"
 
-echo -e "${YELLOW}Installing dmz $VERSION...${RESET}"
+echo -e "${YELLOW}Installing dmz $VERSION for $OS/$ARCH...${RESET}"
 
 # Step 2: Prepare dirs
 mkdir -p "$INSTALL_DIR"
@@ -40,7 +49,7 @@ mkdir -p "$INSTALL_DIR"
 TMPDIR=$(mktemp -d)
 curl -fsSL "$TAR_URL" -o "$TMPDIR/dmz.tar.gz"
 tar -xzf "$TMPDIR/dmz.tar.gz" -C "$TMPDIR"
-rsync -a "$TMPDIR/dmz-$VERSION"/ "$INSTALL_DIR"/
+rsync -a "$TMPDIR/dmz-$VERSION"/ "$INSTALL_DIR"/ || true
 rm -rf "$TMPDIR"
 
 # Step 4: Make binary executable

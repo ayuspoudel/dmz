@@ -13,7 +13,7 @@ pub fn run(module: Option<&str>, should_refresh: bool) {
         Some(name) => handle_named_add(name, should_refresh),
         None => handle_interactive_add(should_refresh),
     }
-}
+}  
 
 fn handle_named_add(name: &str, should_refresh: bool) {
     let path = get_local_zsh_dir().join(format!("{}.zsh", name));

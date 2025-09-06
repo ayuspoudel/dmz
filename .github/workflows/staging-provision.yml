@@ -15,18 +15,39 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+      
+      - name: Write SSH Public Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KEY_PUB }}" > ~/.ssh/dmz-key.pub
+          chmod 600 ~/.ssh/dmz-key.pub
+
+
+      - name: Check if ssh file was written
+        run: |
+          cat ~/.ssh/dmz-key.pub
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Configure AWS Credentials
+        run: |
+          aws configure set aws_access_key_id "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          aws configure set region "${{ secrets.AWS_REGION }}"
+
       - name: Terraform Init
         run: terraform init
+        working-directory: .deployment/staging
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: .deployment/staging
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -var="public_key_path=/home/runner/.ssh/dmz-key.pub" -auto-approve
+        working-directory: .deployment/staging
